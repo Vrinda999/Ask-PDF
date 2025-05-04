@@ -1,0 +1,6 @@
+*.pdf
+resources.md
+__pycache__
+test.py
+uploads
+models
