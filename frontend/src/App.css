@@ -1,9 +1,24 @@
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+
 #root {
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
+  scrollbar-color: var(--scroll-bar) var(--scroll-base);
 }
+
+.image-height {
+  height: auto;
+  max-width: 70%;
+}
+
+
+
 
 .logo {
   height: 6em;
