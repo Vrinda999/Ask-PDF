@@ -139,11 +139,6 @@ const Navbar = () => {
 
                     <DarkModeToggle />
                 </div>
-                <div className="flex">
-                    <Sidebar files={uploadedFiles} />
-                    {/* Rest of the UI (chat, input box, etc.) */}
-                </div>
-
                 <ModalUpload
                     isOpen={isUploadOpen}
                     onClose={() => setIsUploadOpen(false)}
