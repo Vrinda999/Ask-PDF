@@ -15,7 +15,7 @@ Ai Planet Dark Tealy?: #003145
 
 For Dark?
 --pigment-green: #11a856ff;
---prussian-blue: #003145ff;
+--prussian-blue: #003145;
 --cool-gray: #8789c0ff;
 --periwinkle: #c2cae8ff;
 --dun: #dac6b5ff;
@@ -41,14 +41,15 @@ random grey: #9aa3a5
   --scroll-bar: #3a3b4190;
   --scroll-base: #aca7cb66;
   
-  --text-standard: #524438;
+  --text-standard: #171717;
   --text-rev-std: #F8F8FF;
   --text-color: #474555;
   --text-neutral: #5e5e5e;
   
-  --text-purple-300: #48158f;
-  --text-purple-800: #48158f;
-  --text-cyan: #40aec1;
+  --ai-chat-text: #171717;
+  --ai-chat-bg: #c2cae8ff;
+  --user-chat-bg: #dac6b592;
+  --user-chat-text: #524438;
 }
 
 
@@ -70,7 +71,8 @@ random grey: #9aa3a5
   --text-color: #e4e4e4;
   --text-neutral: #a1a1a1;
 
-  --text-purple-300: #ca8cff;
-  --text-purple-800: #9e64e4;
-  --text-cyan: #53eafd;
+  --ai-chat-text: #171717;
+  --ai-chat-bg: #85a0ae;
+  --user-chat-bg: #354a54;
+  --user-chat-text: #f8f8ff;
 }
