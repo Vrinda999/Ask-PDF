@@ -50,7 +50,7 @@ const ChatSection = () => {
                     placeholder="Ask a question..."
                     className="flex-1 p-2 border-2 border-[var(--icon-color)] rounded"
                 />
-                <button onClick={sendMessage} className="bg-[var(--ai-green)] text-white px-4 py-2 rounded">Send</button>
+                <button onClick={sendMessage} className="bg-[var(--ai-green)] text-white px-4 py-2 rounded cursor-pointer">Send</button>
             </div>
         </div>
     );
