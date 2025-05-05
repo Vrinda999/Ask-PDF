@@ -48,9 +48,9 @@ const ChatSection = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask a question..."
-                    className="flex-1 p-2 border rounded"
+                    className="flex-1 p-2 border-2 border-[var(--icon-color)] rounded"
                 />
-                <button onClick={sendMessage} className="bg-blue-500 text-white px-4 py-2 rounded">Send</button>
+                <button onClick={sendMessage} className="bg-[var(--ai-green)] text-white px-4 py-2 rounded">Send</button>
             </div>
         </div>
     );

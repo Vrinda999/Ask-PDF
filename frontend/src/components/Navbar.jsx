@@ -3,6 +3,7 @@ import { FaLinkedin, FaGithub, FaBars, FaTimes } from 'react-icons/fa';
 import { LiaResearchgate } from 'react-icons/lia';
 import DarkModeToggle from "./DarkModeToggle";
 import AIPlanetLogo from "../assets/ai_planet_logo.svg"
+import ModalUpload from './ModalUpload';
 
 // import DropdownOptions from './DropdownOptions';
 
@@ -37,6 +38,8 @@ const Navbar = () => {
     };
 
 
+
+    const [showModal, setShowModal] = useState(false);
 
     return (
         <nav className="fixed top-0 left-0 z-[50] mb-20 flex items-center justify-between py-2 px-2 w-full outline-1 outline-[#524438]
@@ -113,8 +116,23 @@ const Navbar = () => {
             </div>
 
             <div className='m-4 flex align-middle items-center justify-center gap-6 text-3xl px-2'>
+                <div className="flex items-center space-x-4">
+                    <button
+                        className="z-[51] flex items-center gap-2 text-lg sm:text-xl font-medium px-4 py-2 rounded-md border-2 border-(--icon-border) dark:border-(--icon-color)
+                        text-[var(--text-standard)] dark:text-[var(--text-standard)]
+                        bg-[var(--nav-color)] dark:bg-[var(--nav-color)] 
+                        
+                        hover:bg-[var(--icon-color)] hover:dark:bg-[var(--icon-color)] hover:text-[var(--text-rev-std)] hover:dark:text-[var(--text-rev-std)]"
+
+                        onClick={() => setShowModal(true)}
+                    >
+                        Upload PDF
+                    </button>
+                </div>
+
                 <DarkModeToggle />
             </div>
+            {showModal && <ModalUpload onClose={() => setShowModal(false)} />}
         </nav >
     );
 };

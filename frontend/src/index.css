@@ -33,7 +33,7 @@ random grey: #9aa3a5
   --border-color: #dadada;
   --nav-bg-color: #dac6b5bb;
 
-  --btn-hov-bg: #a3a2ae;
+  --btn-hov-bg: #fff7ed;
   
   --icon-border: #4f4f4f;
   --icon-color: #524438; 
@@ -50,6 +50,8 @@ random grey: #9aa3a5
   --ai-chat-bg: #c2cae8ff;
   --user-chat-bg: #dac6b592;
   --user-chat-text: #524438;
+  --ai-green: #11a856ff;
+
 }
 
 
@@ -58,7 +60,7 @@ random grey: #9aa3a5
   --border-color: #1c1c1c;
   --nav-bg-color: #02131a;
   
-  --btn-hov-bg: #171717;
+  --btn-hov-bg: #354a54;
   
   --icon-border: #171717;
   --icon-color: #cccccc;
@@ -75,4 +77,6 @@ random grey: #9aa3a5
   --ai-chat-bg: #85a0ae;
   --user-chat-bg: #354a54;
   --user-chat-text: #f8f8ff;
+  --ai-green: #11a856ff;
+
 }
