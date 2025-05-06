@@ -1,16 +1,42 @@
 import './App.css'
-import { ChatSection, Navbar } from './components/Components'
+import { ChatSection, Navbar, Sidebar } from './components/Components'
+import { useState } from 'react';
 
 function App() {
-  return (
-    <div
-      className={`pt-35 overflow-x-hidden text-[var(--text-color)] dark:text-[var(--text-neutral)] antialiased selection:bg-[#4f6e82] selection:text-black mb-0 absolute top-0 z-[-2] scrollbar h-screen w-screen [var(--bg-color)] dark:bg-[var(--bg-color)]`}
-    >
-      <Navbar />
-      <ChatSection />
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [selectedFile, setSelectedFile] = useState(null);
 
-    </div>
-  )
-}
+  const handleUploadSuccess = (filename) => {
+    setUploadedFiles((prev) => [...prev, filename]);
+  };
+
+  const handleSelectFile = (file) => {
+    setSelectedFile(file);
+    setShowSidebar(false); // Close sidebar when a file is selected
+  };
+
+  return (
+    <div className="min-h-screen bg-[var(--bg-color)] text-[var(--text-standard)] dark:bg-[var(--bg-color)] dark:text-[var(--text-standard)]">
+      <Navbar
+        onToggleSidebar={() => setShowSidebar(!showSidebar)}
+        onUploadSuccess={handleUploadSuccess}
+      />
+
+      {showSidebar && (
+        <Sidebar
+          files={uploadedFiles}
+          onSelectFile={handleSelectFile}
+          onClose={() => setShowSidebar(false)}
+        />
+      )}
+
+      {selectedFile && (
+        <div className="mt-24 flex justify-center">
+          <ChatSection filename={selectedFile} />
+        </div>
+      )}    </div>
+  );
+};
 
 export default App

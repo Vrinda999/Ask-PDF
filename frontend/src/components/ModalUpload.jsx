@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const ModalUpload = ({ isOpen, onClose, onUploadSuccess }) => {
@@ -20,6 +20,12 @@ const ModalUpload = ({ isOpen, onClose, onUploadSuccess }) => {
         }
     };
 
+    useEffect(() => {
+        if (isOpen) {
+            setFile(null);                    // Reset file input when modal opens
+        }
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     return (
@@ -38,13 +44,13 @@ const ModalUpload = ({ isOpen, onClose, onUploadSuccess }) => {
                     className="mb-4 block mx-auto text-center cursor-pointer"
                 />
                 <div className="flex place-self-center justify-end space-x-4">
-                    <button className="px-4 py-2 bg-gray-300 rounded cursor-pointer" onClick={onClose}>
+                    <button className="px-4 py-2 rounded cursor-pointer bg-[var(--red-500)] hover:bg-[var(--red-700)]" onClick={onClose}>
                         Cancel
                     </button>
                     <button className={`px-4 py-2 
-                    ${file ? "bg-[var(--ai-green)] text-white cursor-pointer"
+                    ${file ? "px-4 py-2 rounded bg-[var(--ai-green)] hover:bg-[var(--ai-green-dark)] text-white cursor-pointer"
                             :
-                            "bg-gray-400 text-white cursor-not-allowed"}`}
+                            "px-4 py-2 rounded bg-gray-400 text-white cursor-not-allowed"}`}
                         onClick={handleUpload}
                         disabled={!file}>
                         Upload

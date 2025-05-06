@@ -1,34 +1,62 @@
 import { useState } from 'react';
+import axios from "axios";
 
-const ChatSection = () => {
-    const [messages, setMessages] = useState([]);
+const ChatSection = ({ filename }) => {
+    const [messages, setMessages] = useState([
+        {
+            sender: "system",
+            text: `You are now Chatting About ${filename}`
+        }
+    ]);
     const [input, setInput] = useState("");
 
     const sendMessage = async () => {
         if (!input.trim()) return;
 
-        const userMessage = { role: "user", text: input };
-        setMessages([...messages, userMessage]);
+        const newMessages = [...messages, { sender: "user", text: input }];
+        setMessages(newMessages);
         setInput("");
 
-        const response = await fetch("http://localhost:8000/ask", {
-            method: "POST",
-            body: new URLSearchParams({ filename: "sample.pdf", question: input })
-        });
+        // try {
+        //     const response = await axios.post("http://localhost:8000/ask", {
+        //         filename,
+        //         question: input,
+        //     });
 
-        const data = await response.json();
-        const botMessage = { role: "bot", text: data.Answer.response || data.Answer };
-        setMessages(prev => [...prev, botMessage]);
+        //     if (response.data?.answer) {
+        //         setMessages((prev) => [
+        //             ...prev,
+        //             { sender: "assistant", text: response.data.answer },
+        //         ]);
+        //     } else {
+        //         setMessages((prev) => [
+        //             ...prev,
+        //             { sender: "assistant", text: "No answer received." },
+        //         ]);
+        //     }
+        // } catch (err) {
+        //     console.error("Chat error:", err);
+        //     setMessages((prev) => [
+        //         ...prev,
+        //         { sender: "assistant", text: "Failed to reach server." },
+        //     ]);
+        // }
     };
+
+    const handleKeyPress = (e) => {
+        if (e.key === "Enter") sendMessage();
+    };
+
 
     return (
         <div className="flex flex-col h-full p-4 pb-12 w-1/2 place-self-center ">
+            <h2 className="text-xl font-semibold mb-2">Chat with LLaMA</h2>
             <div className="flex-1 overflow-y-auto space-y-2 mb-4">
                 {messages.map((msg, idx) => (
                     <div
                         key={idx}
                         className={`p-2 rounded 
-                        ${msg.role === "user" ? ` bg-[var(--user-chat-bg)] text-[var(--user-chat-text)] 
+                        ${msg.sender === "user" ? ` bg-[var(--user-chat-bg)] text-[var(--user-chat-text)] 
                         dark:bg-[var(--user-chat-bg)] dark:text-[var(--user-chat-text)] 
                         max-w-2/3 place-self-end text-justify px-4`
                                 :
@@ -36,9 +64,7 @@ const ChatSection = () => {
                         dark:bg-[var(--ai-chat-bg)] dark:text-[var(--ai-chat-text)] 
                         place-self-start text-justify px-4`}
                         `}>
-
                         {msg.text}
-
                     </div>
                 ))}
             </div>
@@ -47,10 +73,16 @@ const ChatSection = () => {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Ask a question..."
+                    onKeyPress={handleKeyPress}
+                    placeholder="Ask a Question..."
                     className="flex-1 p-2 border-2 border-[var(--icon-color)] rounded"
                 />
-                <button onClick={sendMessage} className="bg-[var(--ai-green)] text-white px-4 py-2 rounded cursor-pointer">Send</button>
+                <button
+                    onClick={sendMessage}
+                    className="bg-[var(--ai-green)] text-white px-4 py-2 rounded cursor-pointer"
+                >
+                    Send
+                </button>
             </div>
         </div>
     );

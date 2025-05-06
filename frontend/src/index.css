@@ -31,7 +31,7 @@ random grey: #9aa3a5
   font-family: "Inter", sans-serif;
   --bg-color: #fff7ed;
   --border-color: #dadada;
-  --nav-bg-color: #dac6b5bb;
+  --nav-bg-color: #dac6b5;
 
   --btn-hov-bg: #fff7ed;
   
@@ -50,7 +50,10 @@ random grey: #9aa3a5
   --ai-chat-bg: #c2cae8ff;
   --user-chat-bg: #dac6b592;
   --user-chat-text: #524438;
+  --red-500: #fb2c36;
+  --red-700: #c10007;
   --ai-green: #11a856ff;
+  --ai-green-dark: #008739;
 
 }
 
@@ -77,6 +80,7 @@ random grey: #9aa3a5
   --ai-chat-bg: #85a0ae;
   --user-chat-bg: #354a54;
   --user-chat-text: #f8f8ff;
-  --ai-green: #11a856ff;
 
+  --ai-green: #11a856ff;
+  --ai-green-dark: #008739;
 }
