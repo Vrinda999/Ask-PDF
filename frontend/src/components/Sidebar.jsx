@@ -1,6 +1,6 @@
-import React from "react";
+import { React } from "react";
 
-const Sidebar = ({ files, onSelectFile, onClose }) => {
+const Sidebar = ({ files, onSelectFile, onClose, selectedFile }) => {
     return (
         <div className="fixed left-0 top-24 w-64 h-full z-40 p-4 overflow-y-auto
             mb-20 py-2 px-2 outline-1 outline-[var(--icon-color)]
@@ -25,10 +25,23 @@ const Sidebar = ({ files, onSelectFile, onClose }) => {
                     {files.map((file, idx) => (
                         <li
                             key={idx}
-                            className="cursor-pointer px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded hover:bg-gray-200 dark:hover:bg-gray-600"
+                            className={`cursor-pointer px-3 py-2 rounded
+                            border 
+                            ${selectedFile === file
+                                    ?
+                                    `border-(--icon-border) dark:border-(--icon-color)
+                                    text-[var(--text-standard)] dark:text-[var(--text-standard)]
+                                    bg-[var(--nav-darker)] dark:bg-[var(--nav-darker)] 
+                                    hover:bg-[var(--icon-color)] hover:dark:bg-[var(--icon-color)] hover:text-[var(--text-rev-std)] hover:dark:text-[var(--text-rev-std)]`
+                                    :
+                                    `border-(--icon-border) dark:border-(--icon-color)
+                                    text-[var(--text-standard)] dark:text-[var(--text-standard)]
+                                    bg-[var(--nav-bg-color)] dark:bg-[var(--nav-bg-color)] 
+                                    hover:bg-[var(--icon-color)] hover:dark:bg-[var(--icon-color)] hover:text-[var(--text-rev-std)] hover:dark:text-[var(--text-rev-std)]`
+                                }
+                        `}
                             onClick={() => {
                                 onSelectFile(file);
-                                onClose(); // Optional: close sidebar after selecting
                             }}
                         >
                             {file}

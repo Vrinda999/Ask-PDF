@@ -5,7 +5,7 @@ import { useState } from 'react';
 function App() {
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [showSidebar, setShowSidebar] = useState(true);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState("");
 
   const handleUploadSuccess = (filename) => {
     setUploadedFiles((prev) => [...prev, filename]);
@@ -26,6 +26,7 @@ function App() {
       {showSidebar && (
         <Sidebar
           files={uploadedFiles}
+          selectedFile={selectedFile}
           onSelectFile={handleSelectFile}
           onClose={() => setShowSidebar(false)}
         />
@@ -35,7 +36,9 @@ function App() {
         <div className="mt-24 flex justify-center">
           <ChatSection filename={selectedFile} />
         </div>
-      )}    </div>
+      )}
+
+    </div>
   );
 };
 

@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from "axios";
 
 const ChatSection = ({ filename }) => {
-    const [messages, setMessages] = useState([
-        {
-            sender: "system",
-            text: `You are now Chatting About ${filename}`
-        }
-    ]);
+    const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
+
+    // ✅ Reset chat with new file
+    useEffect(() => {
+        if (filename) {
+            setMessages([
+                {
+                    sender: "system",
+                    text: `📄 "${filename}" selected. You can now ask questions about this file.`,
+                }
+            ]);
+        }
+    }, [filename]);
+
 
     const sendMessage = async () => {
         if (!input.trim()) return;
@@ -17,30 +25,30 @@ const ChatSection = ({ filename }) => {
         setMessages(newMessages);
         setInput("");
 
-        // try {
-        //     const response = await axios.post("http://localhost:8000/ask", {
-        //         filename,
-        //         question: input,
-        //     });
+        try {
+            const response = await axios.post("http://localhost:8000/ask", {
+                filename,
+                question: input,
+            });
 
-        //     if (response.data?.answer) {
-        //         setMessages((prev) => [
-        //             ...prev,
-        //             { sender: "assistant", text: response.data.answer },
-        //         ]);
-        //     } else {
-        //         setMessages((prev) => [
-        //             ...prev,
-        //             { sender: "assistant", text: "No answer received." },
-        //         ]);
-        //     }
-        // } catch (err) {
-        //     console.error("Chat error:", err);
-        //     setMessages((prev) => [
-        //         ...prev,
-        //         { sender: "assistant", text: "Failed to reach server." },
-        //     ]);
-        // }
+            if (response.data?.answer) {
+                setMessages((prev) => [
+                    ...prev,
+                    { sender: "assistant", text: response.data.answer },
+                ]);
+            } else {
+                setMessages((prev) => [
+                    ...prev,
+                    { sender: "assistant", text: "No answer received." },
+                ]);
+            }
+        } catch (err) {
+            console.error("Chat error:", err);
+            setMessages((prev) => [
+                ...prev,
+                { sender: "assistant", text: "Failed to reach server." },
+            ]);
+        }
     };
 
     const handleKeyPress = (e) => {
@@ -50,7 +58,7 @@ const ChatSection = ({ filename }) => {
 
     return (
         <div className="flex flex-col h-full p-4 pb-12 w-1/2 place-self-center ">
-            <h2 className="text-xl font-semibold mb-2">Chat with LLaMA</h2>
+            <h2 className="text-xl font-semibold mb-8">Chat with LLaMA</h2>
             <div className="flex-1 overflow-y-auto space-y-2 mb-4">
                 {messages.map((msg, idx) => (
                     <div

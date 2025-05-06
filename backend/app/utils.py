@@ -1,4 +1,5 @@
 import os
+import concurrent.futures
 from llama_index.llms.llama_cpp import LlamaCPP
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
 from llama_index.core.settings import Settings
@@ -24,6 +25,8 @@ def process_pdf(file_path):
     docs = reader.load_data()                                           # Loading
     index = VectorStoreIndex.from_documents(docs)                       # Indecing
     return index
+
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=2) # Ru this in a Background Thread so as to not hang the system.
 
 def ask_question(file_path, question):
     if file_path not in index_cache:

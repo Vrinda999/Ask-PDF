@@ -1,8 +1,14 @@
 import os
-from fastapi import APIRouter, File, UploadFile, Form
+import asyncio
+from pydantic import BaseModel
 from fastapi.responses import JSONResponse
+from app.utils import ask_question, executor
+from fastapi import APIRouter, File, UploadFile, Form, BackgroundTasks
 
-from app.utils import process_pdf, ask_question
+
+class AskRequest(BaseModel):
+    filename: str
+    question: str
 
 router = APIRouter()
 Upload_Dir = "uploads"
@@ -18,10 +24,15 @@ async def upload_file(file: UploadFile = File(...)):
     return {"filename": file.filename, "message": "Upload Successful"}
 
 @router.post("/ask")
-async def ask(filename: str = Form(...), question: str = Form(...)):
+async def ask(data: AskRequest):
+    filename = data.filename
+    question = data.question
     file_path = os.path.join(Upload_Dir, filename)
+
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "File Not Found"})
-    
-    answer = ask_question(file_path, question)
-    return {"Answer": answer}
+
+    # Run blocking question in background
+    loop = asyncio.get_event_loop()
+    answer = await loop.run_in_executor(executor, ask_question, file_path, question)
+    return {"answer": answer}
