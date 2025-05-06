@@ -20,11 +20,11 @@ const Navbar = ({ onToggleSidebar, onUploadSuccess }) => {
 
                 <div className="
             flex flex-shrink-0 text-[var(--text-standard)] dark:text-[var(--text-standard)] font-serif text-2xl sm:text-4xl px-8
-            sm:m-4 gap-10 image-height w-1/9
+            sm:m-4 gap-10 image-height w-1/7 h-auto
             ">
 
                     <img
-                        className='rounded-2xl'
+                        className='rounded-md'
                         src={AIPlanetLogo}
                         alt='AI Planet Logo`'
 
