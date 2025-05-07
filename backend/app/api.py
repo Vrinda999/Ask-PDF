@@ -1,6 +1,8 @@
 import os
 import asyncio
 from pydantic import BaseModel
+from dotenv import load_dotenv
+from pymongo import MongoClient
 from fastapi.responses import JSONResponse
 from app.utils import ask_question, executor
 from fastapi import APIRouter, File, UploadFile, Form, BackgroundTasks
@@ -36,3 +38,31 @@ async def ask(data: AskRequest):
     loop = asyncio.get_event_loop()
     answer = await loop.run_in_executor(executor, ask_question, file_path, question)
     return {"answer": answer}
+
+
+
+# Internal Use
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")
+MONGO_DB = os.getenv("MONGO_DB")
+
+print("Connecting to:", MONGO_URI)
+
+
+client = MongoClient(MONGO_URI)
+db = client[MONGO_DB]
+messages_collection = db["messages"]
+
+
+@router.post("/save-message")
+def save_message(message: dict):
+    print("Saving message:", message)
+    messages_collection.insert_one(message)
+    return {"status": "saved"}
+
+
+@router.get("/chat-history/{filename}")
+def get_history(filename: str):
+    msgs = messages_collection.find({"filename": filename})
+    return [{"sender": msg["sender"], "text": msg["text"]} for msg in msgs]
