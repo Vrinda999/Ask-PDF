@@ -17,32 +17,35 @@ const Navbar = ({ onToggleSidebar, onUploadSuccess }) => {
             <nav className="fixed top-0 left-0 z-[50] mb-20 flex items-center justify-between py-2 px-2 w-full outline-1 outline-[var(--icon-color)]
             bg-[var(--nav-bg-color)] dark:bg-[var(--nav-bg-color)
         ">
+                <div className='flex flex-row align-middle items-center'>
+                    <div className="
+                    flex flex-shrink-0 text-[var(--text-standard)] dark:text-[var(--text-standard)] font-serif text-2xl sm:text-4xl
+                    m-4 gap-10 w-[80%] sm:max-w-[10%] sm:h-auto
+                    ">
 
-                <div className="
-            flex flex-shrink-0 text-[var(--text-standard)] dark:text-[var(--text-standard)] font-serif text-2xl sm:text-4xl px-8
-            sm:m-4 gap-10 image-height w-1/7 h-auto
-            ">
+                        <img
+                            className='rounded-md'
+                            src={AIPlanetLogo}
+                            alt='AI Planet Logo`'
 
-                    <img
-                        className='rounded-md'
-                        src={AIPlanetLogo}
-                        alt='AI Planet Logo`'
+                        />
+                    </div>
+                    <div>
 
-                    />
-
-                    <button
-                        className="z-[51] cursor-pointer flex items-center gap-2 text-lg sm:text-xl font-medium px-4 py-2 rounded-md border-2 border-(--icon-border) dark:border-(--icon-color)
-                            text-[var(--text-standard)] dark:text-[var(--text-standard)]
-                            bg-[var(--nav-bg-color)] dark:bg-[var(--nav-bg-color)] 
-                            hover:bg-[var(--icon-color)] hover:dark:bg-[var(--icon-color)] hover:text-[var(--text-rev-std)] hover:dark:text-[var(--text-rev-std)]"
-                        onClick={onToggleSidebar}
-                    >
-                        Sidebar
-                    </button>
+                        <button
+                            className="z-[51] cursor-pointer flex items-center gap-2 text-lg sm:text-xl font-medium px-4 py-2 rounded-md border-2 border-(--icon-border) dark:border-(--icon-color)
+                        text-[var(--text-standard)] dark:text-[var(--text-standard)]
+                        bg-[var(--nav-bg-color)] dark:bg-[var(--nav-bg-color)] 
+                        hover:bg-[var(--icon-color)] hover:dark:bg-[var(--icon-color)] hover:text-[var(--text-rev-std)] hover:dark:text-[var(--text-rev-std)]"
+                            onClick={onToggleSidebar}
+                        >
+                            Uploaded PDFs
+                        </button>
+                    </div>
                 </div>
 
-                <div className='m-4 flex align-middle items-center justify-center gap-6 text-3xl px-2'>
-                    <div className="flex items-center space-x-4">
+                <div className='m-4 flex flex-row align-middle items-center justify-center gap-6 text-3xl px-2'>
+                    <div className="flex flex-shrink-0 items-center space-x-4">
                         <button
                             className="z-[51] cursor-pointer flex items-center gap-2 text-lg sm:text-xl font-medium px-4 py-2 rounded-md border-2 border-(--icon-border) dark:border-(--icon-color)
                         text-[var(--text-standard)] dark:text-[var(--text-standard)]

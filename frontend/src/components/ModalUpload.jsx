@@ -3,6 +3,8 @@ import axios from "axios";
 
 const ModalUpload = ({ isOpen, onClose, onUploadSuccess }) => {
     const [file, setFile] = useState(null);
+    const BACKEND_URL = import.meta.env.VITE_BACKEND;
+
 
     const handleUpload = async () => {
         if (!file) return;
@@ -10,7 +12,7 @@ const ModalUpload = ({ isOpen, onClose, onUploadSuccess }) => {
         formData.append("file", file);
 
         try {
-            const response = await axios.post("http://localhost:8000/upload", formData);
+            const response = await axios.post(`${BACKEND_URL}/upload`, formData);
             if (response.status === 200) {
                 onUploadSuccess(response.data.filename); // Modal closes from parent now
                 setFile(null);                           // reset file

@@ -4,44 +4,70 @@ import axios from "axios";
 const ChatSection = ({ filename }) => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
+    const BACKEND_URL = import.meta.env.VITE_BACKEND;
 
-    // ✅ Reset chat with new file
     useEffect(() => {
-        if (filename) {
-            setMessages([
-                {
-                    sender: "system",
-                    text: `📄 "${filename}" selected. You can now ask questions about this file.`,
-                }
-            ]);
-        }
-    }, [filename]);
+        const fetchHistory = async () => {
+            if (!filename) return;
+
+            try {
+                const response = await axios.get(`${BACKEND_URL}/chat-history/${filename}`);
+                setMessages([
+                    {
+                        sender: "system",
+                        text: `📄 "${filename}" selected. You can now ask questions about this file.`,
+                    },
+                    ...response.data
+                ]);
+            } catch (err) {
+                console.error("Failed to fetch history:", err);
+                setMessages([
+                    {
+                        sender: "system",
+                        text: `📄 "${filename}" selected, but couldn't load history.`,
+                    }
+                ]);
+            }
+        };
+
+        fetchHistory();
+    }, [filename, BACKEND_URL]);
 
 
     const sendMessage = async () => {
         if (!input.trim()) return;
 
-        const newMessages = [...messages, { sender: "user", text: input }];
+        const userMessage = { sender: "user", text: input, filename };
+        const newMessages = [...messages, userMessage];
         setMessages(newMessages);
         setInput("");
 
         try {
-            const response = await axios.post("http://localhost:8000/ask", {
+            const response = await axios.post(`${BACKEND_URL}/ask`, {
                 filename,
                 question: input,
             });
 
-            if (response.data?.answer) {
-                setMessages((prev) => [
-                    ...prev,
-                    { sender: "assistant", text: response.data.answer },
-                ]);
-            } else {
-                setMessages((prev) => [
-                    ...prev,
-                    { sender: "assistant", text: "No answer received." },
-                ]);
-            }
+            const assistantText = response.data?.answer || "No answer received.";
+            const assistantMessage = { sender: "assistant", text: assistantText, filename };
+
+            setMessages((prev) => [...prev, assistantMessage]);
+
+            // Save both messages to MongoDB
+            // await axios.post(`${BACKEND_URL}/save-message`, userMessage);
+            // await axios.post(`${BACKEND_URL}/save-message`, assistantMessage);
+
+            await axios.post(`${BACKEND_URL}/save-message`, {
+                sender: "user",
+                text: input,
+                filename, // make sure this is passed!
+            });
+            await axios.post(`${BACKEND_URL}/save-message`, {
+                sender: "assistant",
+                text: response.data.answer,
+                filename,
+            });
+
         } catch (err) {
             console.error("Chat error:", err);
             setMessages((prev) => [
@@ -51,6 +77,8 @@ const ChatSection = ({ filename }) => {
         }
     };
 
+
+
     const handleKeyPress = (e) => {
         if (e.key === "Enter") sendMessage();
     };
@@ -58,7 +86,9 @@ const ChatSection = ({ filename }) => {
 
     return (
         <div className="flex flex-col h-full p-4 pb-12 w-1/2 place-self-center ">
-            <h2 className="text-xl font-semibold mb-8">Chat with LLaMA</h2>
+            <h2 className="text-xl font-semibold mb-8">
+                Chat with LLaMA
+            </h2>
             <div className="flex-1 overflow-y-auto space-y-2 mb-4">
                 {messages.map((msg, idx) => (
                     <div
