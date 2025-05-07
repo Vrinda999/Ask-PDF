@@ -20,13 +20,29 @@ Settings.llm = llm
 Settings.embed_model = HuggingFaceEmbedding(model_name="sentence-transformers/all-MiniLM-L6-v2")
 index_cache = {}
 
+'''
+Processes the PDF using LlamaIndex's SimpleDirectoryReader.
+This extracts Text content from Supported Files (here PDFs), and converts them into a list of Doc Objects.
+
+VectorStore Index takes in Documents (from Simple Directory Reader) and splits them into Smaller Chunks.
+Stores these Chunks as Embeddings for Later Use in Querying.
+'''
 def process_pdf(file_path):
     reader = SimpleDirectoryReader(input_files=[file_path])
     docs = reader.load_data()                                           # Loading
     index = VectorStoreIndex.from_documents(docs)                       # Indecing
     return index
 
-executor = concurrent.futures.ThreadPoolExecutor(max_workers=2) # Ru this in a Background Thread so as to not hang the system.
+
+
+'''
+Contacts the LLM Model to Query about the Passed File.
+Calls the above Mentioned Function to Process PDFs and work with the generated embeddings.
+This Passes Context + Question to LLaMA and Returns the Generated Answer.
+'''
+
+# Run this in a Background Thread so as to not hang the system.
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
 
 def ask_question(file_path, question):
     if file_path not in index_cache:

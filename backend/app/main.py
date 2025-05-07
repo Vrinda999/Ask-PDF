@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 load_dotenv()
 
-# Allow CORS from your frontend
+# Allow Frotnend Access to FastAPI Backend using CORS
 React_Server = os.getenv("REACT_SERVER")
 app.add_middleware(
     CORSMiddleware,
