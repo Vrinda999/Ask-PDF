@@ -1,3 +1,5 @@
+// Navigation Bar with Logo, Sidebar, Upload PDF button and Theme Toggle.
+
 import { useState } from 'react';
 import AIPlanetLogo from '../assets/ai_planet_logo.svg';
 import ModalUpload from './ModalUpload';
@@ -6,6 +8,7 @@ import DarkModeToggle from './DarkModeToggle';
 const Navbar = ({ onToggleSidebar, onUploadSuccess }) => {
     const [isUploadOpen, setIsUploadOpen] = useState(false);
 
+    // Handles Display of Modal after Successful Uploading of File.
     const handleUploadSuccess = (filename) => {
         onUploadSuccess(filename); // pass it to parent
         setIsUploadOpen(false);    // close modal
@@ -61,6 +64,10 @@ const Navbar = ({ onToggleSidebar, onUploadSuccess }) => {
                     <DarkModeToggle />
                 </div>
             </nav >
+
+            {/* 
+            Dynamic Upload Handling and Closing of Modal.
+            */}
             <ModalUpload
                 isOpen={isUploadOpen}
                 onClose={() => setIsUploadOpen(false)}

@@ -1,3 +1,7 @@
+/*
+Defines Global Variables for the Color Palette.
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 @layer theme, base, components, utilities;
@@ -5,27 +9,6 @@
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
-
-/*
-Ultraviolet: #54577C
-Ghost White: #F8F8FF
-Pigment Green (Co.): #11A856
-Ai Planet Dark Tealy?: #003145
-
-
-For Dark?
---pigment-green: #11a856ff;
---prussian-blue: #003145;
---cool-gray: #8789c0ff;
---periwinkle: #c2cae8ff;
---dun: #dac6b5ff;
-
-
-blue cyan text: #b1ebff
-dark bg: #03202b
-random grey: #9aa3a5
-*/
-
 
 :root {
   font-family: "Inter", sans-serif;

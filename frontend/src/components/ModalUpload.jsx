@@ -1,3 +1,6 @@
+// Modal to Upload a New PDF File
+// Closes After Successful Upload and Updates the File List
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -6,6 +9,11 @@ const ModalUpload = ({ isOpen, onClose, onUploadSuccess }) => {
     const BACKEND_URL = import.meta.env.VITE_BACKEND;
 
 
+    /*
+    Calls the upload API to store PDF. 
+    The Upload button isn't Enabled until a File is Selected. 
+    Cancel Button Resets the Input Field.
+    */
     const handleUpload = async () => {
         if (!file) return;
         const formData = new FormData();

@@ -1,3 +1,6 @@
+// Lists All The Uploaded Files
+// Clicking on a File Name Updates the Active Chat Session.
+
 import { React } from "react";
 
 const Sidebar = ({ files, onSelectFile, onClose, selectedFile }) => {

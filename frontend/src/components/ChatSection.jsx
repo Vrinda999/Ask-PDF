@@ -1,3 +1,6 @@
+// Core Chat Interface.
+// Displays Chat Messages and Input Box for Typing in Query.
+
 import { useState, useEffect } from 'react';
 import axios from "axios";
 
@@ -11,6 +14,8 @@ const ChatSection = ({ filename }) => {
             if (!filename) return;
 
             try {
+                // Retrieves the Saved Chat and Displays in the Chat Interface.
+                // Helps Store the Answers and History when Selected File Changes.
                 const response = await axios.get(`${BACKEND_URL}/chat-history/${filename}`);
                 setMessages([
                     {
@@ -34,6 +39,7 @@ const ChatSection = ({ filename }) => {
     }, [filename, BACKEND_URL]);
 
 
+    // Sends Question to Backend and Saves Messages to MongoDB
     const sendMessage = async () => {
         if (!input.trim()) return;
 
@@ -53,14 +59,11 @@ const ChatSection = ({ filename }) => {
 
             setMessages((prev) => [...prev, assistantMessage]);
 
-            // Save both messages to MongoDB
-            // await axios.post(`${BACKEND_URL}/save-message`, userMessage);
-            // await axios.post(`${BACKEND_URL}/save-message`, assistantMessage);
-
+            // Saving Messages sent by Both - the User, and the Assistant (LLM) - to MongoDB for Retrieval Later On.
             await axios.post(`${BACKEND_URL}/save-message`, {
                 sender: "user",
                 text: input,
-                filename, // make sure this is passed!
+                filename,
             });
             await axios.post(`${BACKEND_URL}/save-message`, {
                 sender: "assistant",

@@ -3,10 +3,13 @@ import { FaSun, FaMoon } from "react-icons/fa";
 import { motion } from "motion/react"
 
 const DarkModeToggle = () => {
+  // Importing Dark Mode Colours
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem("theme") === "dark"
   );
 
+
+  // Dynamic Update of Colours
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -18,6 +21,7 @@ const DarkModeToggle = () => {
   }, [darkMode]);
 
   return (
+    // Animated Button UwU
     <motion.button
       onClick={() => setDarkMode(!darkMode)}
       className="p-2 rounded-full cursor-pointer
