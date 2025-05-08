@@ -8,6 +8,9 @@
     3. [Front-end](#frontend)
 3. [Features](#features)
 4. [Setup Instruction](#setup-instructions)
+    1. [Backend](#backend-1)
+    2. [Frontend](#frontend-1)
+    3. [MongoDB](#mongodb-compass)
 5. [APIs](#apis)
     1. [`/upload`](#post-upload)
     2. [`/ask`](#post-ask)
@@ -19,8 +22,8 @@
     3. [Model](#model)
     4. [Database](#database)
 7. [Dependencies](#dependencies)
-    1. [Backend](#backend-1)
-    2. [Frontend](#frontend-1)
+    1. [Backend](#backend-2)
+    2. [Frontend](#frontend-2)
 
 ---
 
@@ -109,7 +112,26 @@ Ask questions, and receive answers using a locally hosted LLaMA model.
 ---
 
 ## Setup Instructions
-[DOCKERIZE]
+### Backend
+```sh
+cd backend
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+### Frontend
+```sh
+cd frontend
+npm install
+npm run dev
+```
+
+### MongoDB Compass
+```
+Click on Connect to localhost:27017
+```
+
+In browser, open the Ask-PDF Website at [localhost:5173](localhost:5173)
 
 ---
 
@@ -188,3 +210,5 @@ $pip install -r requirements.txt
 ```sh
 $npm install
 ```
+
+## Outlook
