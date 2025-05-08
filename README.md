@@ -24,6 +24,7 @@
 7. [Dependencies](#dependencies)
     1. [Backend](#backend-2)
     2. [Frontend](#frontend-2)
+8. [Outlook](#outlook)
 
 ---
 
@@ -212,3 +213,7 @@ $npm install
 ```
 
 ## Outlook
+
+
+https://github.com/user-attachments/assets/77917972-4639-46bb-8304-b76a26c1c264
+
