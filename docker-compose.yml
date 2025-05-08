@@ -1,0 +1,43 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Maps FastAPI backend to localhost:8000
+    volumes:
+      - ./backend/uploads:/app/uploads
+      - ./backend/models:/app/models
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    depends_on:
+      - mongo
+    env_file:
+      - ./backend/.env
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173" # Maps React frontend to localhost:5173
+    volumes:
+      - ./frontend:/app # Mounts the frontend folder for live updates
+      - /app/node_modules
+    environment:
+      - VITE_BACKEND=http://backend:8000 # Backend URL for the frontend
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend # Ensures the backend starts before the frontend
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    ports:
+      - "27017:27017" # Maps MongoDB to localhost:27017
+    volumes:
+      - mongo_data:/data/db # Persistent storage for MongoDB
+
+volumes:
+  mongo_data:

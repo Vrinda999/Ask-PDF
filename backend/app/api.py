@@ -14,7 +14,11 @@ class AskRequest(BaseModel):
     question: str
 
 router = APIRouter()
-Upload_Dir = "uploads"
+# Upload_Dir = "/uploads"
+
+Upload_Dir = os.path.join(os.path.dirname(__file__), "..", "uploads")
+Upload_Dir = os.path.abspath(Upload_Dir)
+# os.makedirs(Upload_Dir, exist_ok=True)
 
 # Making the uploads folder to save files
 os.makedirs(Upload_Dir, exist_ok=True)
@@ -96,3 +100,7 @@ Loads the Previous Chat, if Any, of specific files so that answers are not Lost.
 def get_history(filename: str):
     msgs = messages_collection.find({"filename": filename})
     return [{"sender": msg["sender"], "text": msg["text"]} for msg in msgs]
+
+@router.get("/ping")
+def ping():
+    return {"ping": "pong"}
