@@ -12,7 +12,7 @@ load_dotenv()
 React_Server = os.getenv("REACT_SERVER")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[React_Server],  # Your React dev server
+    allow_origins=["*"],  # Your React dev server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
